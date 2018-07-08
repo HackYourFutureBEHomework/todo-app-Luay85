@@ -1,5 +1,5 @@
 // Your code goes here!
-let TODOS = [];
+const TODOS = [];
 
 function update() {
     const $todoList = document.querySelector('.todo-list');
@@ -41,6 +41,7 @@ function onNewTodo(e) {
         done: false
     });
     update();
+    e.target.value = '';
 }
 
 // Select the new todo input field
