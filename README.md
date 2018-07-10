@@ -1,3 +1,6 @@
+[Space Game Step2](https://github.com/Luay85/HYF/tree/master/JavaScript2/Week2/Homework/GameStep2)
+
+
 # TODO
 
 Simple bare-bones TODO app based on [TodoMVC](http://todomvc.com/).
