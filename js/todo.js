@@ -1,10 +1,11 @@
-const TODOS = [];
+let TODOS = [];
 
 function update() {
     const $todoList = document.querySelector('.todo-list');
     $todoList.innerHTML = '';
     for (const item of TODOS) {
         const $li = document.createElement('li');
+        $li.setAttribute('item-id', item.id);
         if (item.done) {
             $li.classList.add('completed');
         }
@@ -29,34 +30,51 @@ function update() {
         const $button = document.createElement('button');
         $button.className = 'destroy';
         $li.appendChild($button);
-
-        // !done TODOS
-        const $notDoneTodo = TODOS.filter(item => !item.done).length;
-        // Output on singular || prular !done TODOS 
-        const $todoCount = document.querySelector('.todo-count');
-        if ($notDoneTodo === 1) {
-            $todoCount.innerHTML = $notDoneTodo + ' item left';
-        } else if ($notDoneTodo === 0 || $notDoneTodo > 1) {
-            $todoCount.innerHTML = $notDoneTodo + ' items left';
-        }
+        $button.addEventListener('click', onDeleteItem.bind(null, item.id));
     }
-    document.querySelector('.main').style.display = 'block';
+    // Filter !done TODOS
+    const $notDoneTodo = TODOS.filter(item => !item.done).length;
+
+    // Output on singular || prular !done TODOS
+    const $todoCount = document.querySelector('.todo-count');
+    if ($notDoneTodo === 1) {
+        $todoCount.innerHTML = $notDoneTodo + ' item left';
+    } else {
+        $todoCount.innerHTML = $notDoneTodo + ' items left';
+    }
+
+    // Hide display when all todos are deleted
+    if (TODOS.length === 0) {
+        document.querySelector('.main').style.display = 'none';
+    } else {
+        document.querySelector('.main').style.display = 'block';
+    }
 }
 
 function onToggleTodo(id) {
-    const todo = TODOS.find(todo => todo.id === id);
-    //SAME AS// TODOS.find(function(todo) { return todo.id === id; });
-    todo.done = !todo.done;
+    const item = TODOS.find(item => item.id === id);
+    //SAME AS: TODOS.find(function(item) { return item.id === id; });
+    // .find forEach item the item id that match the same (parameter) id we toggled
+    item.done = !item.done; // reverse the state of item whether it was true || false
+    // SAME AS: if (item.done) {
+    //              item.done = false;
+    //          } else {
+    //              item.done = true;
+    //          }
+    update();
+}
+
+function onDeleteItem(id) {
+    TODOS = TODOS.filter(item => item.id !== id);
     update();
 }
 
 function onNewTodo(e) {
     const title = e.target.value;
-    // same as this line
-    // document.querySelector('.new-todo').value;
+    // SAME AS: document.querySelector('.new-todo').value;
     TODOS.push({
         id: Date.now(),
-        title, // SAME AS// title: title,
+        title, // SAME AS=> title: title,
         done: false
     });
     update();
