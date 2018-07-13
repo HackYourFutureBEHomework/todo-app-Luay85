@@ -32,15 +32,23 @@ function update() {
         $li.appendChild($button);
         $button.addEventListener('click', onDeleteItem.bind(null, item.id));
     }
-    // Filter !done TODOS
-    const $notDoneTodo = TODOS.filter(item => !item.done).length;
 
+    // Filter !done TODOS
+    const $notDoneTodos = TODOS.filter(item => !item.done).length;
     // Output on singular || prular !done TODOS
     const $todoCount = document.querySelector('.todo-count');
-    if ($notDoneTodo === 1) {
-        $todoCount.innerHTML = $notDoneTodo + ' item left';
+    if ($notDoneTodos === 1) {
+        $todoCount.innerHTML = $notDoneTodos + ' item left';
     } else {
-        $todoCount.innerHTML = $notDoneTodo + ' items left';
+        $todoCount.innerHTML = $notDoneTodos + ' items left';
+    }
+
+    // Clear Completed
+    const $doneTodos = TODOS.filter(item => item.done).length;
+    if ($doneTodos > 0) {
+        $clearCompleted.style.display = "block";
+    } else {
+        $clearCompleted.style.display = "none";
     }
 
     // Hide display when all todos are deleted
@@ -69,6 +77,11 @@ function onDeleteItem(id) {
     update();
 }
 
+function onClearCompleted() {
+    TODOS = TODOS.filter(item => !item.done);
+    update();
+}
+
 function onNewTodo(e) {
     const title = e.target.value;
     // SAME AS: document.querySelector('.new-todo').value;
@@ -84,3 +97,7 @@ function onNewTodo(e) {
 // Select the new todo input field
 const $newTodo = document.querySelector('.new-todo');
 $newTodo.addEventListener('change', onNewTodo);
+const $clearCompleted = document.querySelector('.clear-completed');
+$clearCompleted.addEventListener("click", onClearCompleted);
+
+// END OF HW
