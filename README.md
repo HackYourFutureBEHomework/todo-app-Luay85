@@ -1,5 +1,4 @@
-[Space Game Step2](https://github.com/Luay85/HYF/tree/master/JavaScript2/Week2/Homework/GameStep2)
-
+[Space Game Step2](https://github.com/Luay85/HYF/tree/master/JavaScript2/Week3/spaceGameStep5)
 
 # TODO
 
